@@ -96,8 +96,8 @@ const LandingPage = () => {
           </div>
         )}
 
-        {/* Hamburger Button */}
-        {isMobile && (
+        {/* Hamburger Button (only when menu is closed) */}
+        {isMobile && !isMenuOpen && (
           <div
             onClick={toggleMenu}
             style={{
@@ -105,7 +105,7 @@ const LandingPage = () => {
               zIndex: 100,
             }}
           >
-            {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
+            <FiMenu size={28} color={textColor} />
           </div>
         )}
       </div>
@@ -130,7 +130,7 @@ const LandingPage = () => {
             gap: 30,
           }}
         >
-          {/* Close button at top right */}
+          {/* Close Button inside Menu */}
           <div
             onClick={toggleMenu}
             style={{
@@ -147,7 +147,7 @@ const LandingPage = () => {
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-          {/* Dark/Light Toggle inside Mobile Menu */}
+          {/* Dark/Light Toggle inside Menu */}
           <div
             onClick={toggleTheme}
             style={{
