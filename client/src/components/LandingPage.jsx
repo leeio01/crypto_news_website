@@ -35,8 +35,6 @@ const LandingPage = () => {
         minHeight: '100vh',
         background,
         color: textColor,
-        position: 'relative',
-        padding: isMobile ? 20 : 0,
         overflowX: 'hidden',
         boxSizing: 'border-box',
       }}
@@ -47,8 +45,7 @@ const LandingPage = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: isMobile ? 'space-between' : 'flex-start',
-          padding: isMobile ? '10px 0' : '30px 70px',
-          gap: '20px',
+          padding: isMobile ? '10px 20px' : '30px 70px',
           position: 'relative',
         }}
       >
@@ -61,65 +58,51 @@ const LandingPage = () => {
             <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
+
+            {/* Dark/Light Toggle Desktop */}
+            <div
+              onClick={toggleTheme}
+              style={{
+                marginLeft: 30,
+                width: 60,
+                height: 30,
+                background: isDarkMode ? 'white' : 'black',
+                borderRadius: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
+                padding: 4,
+                cursor: 'pointer',
+              }}
+            >
+              <div
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: '50%',
+                  background: isDarkMode ? 'black' : 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img
+                  src={isDarkMode ? elpseIcon : moonIcon}
+                  alt="toggle-icon"
+                  style={{ width: 14, height: 14 }}
+                />
+              </div>
+            </div>
           </div>
         )}
 
-        {/* Dark/Light Toggle */}
-        <div
-          onClick={toggleTheme}
-          style={{
-            position: 'absolute',
-            left: isMobile ? '50%' : 'auto',
-            right: isMobile ? 'auto' : 80,
-            transform: isMobile ? 'translateX(-50%)' : 'none',
-            top: 10,
-            width: 60,
-            height: 30,
-            background: isDarkMode ? 'white' : 'black',
-            borderRadius: 20,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
-            padding: 4,
-            cursor: 'pointer',
-            WebkitTapHighlightColor: 'transparent',
-            tapHighlightColor: 'transparent',
-            outline: 'none',
-            zIndex: 5,
-          }}
-        >
-          <div
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: '50%',
-              background: isDarkMode ? 'black' : 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <img
-              src={isDarkMode ? elpseIcon : moonIcon}
-              alt="toggle-icon"
-              style={{ width: 14, height: 14 }}
-            />
-          </div>
-        </div>
-
-        {/* Hamburger Menu */}
+        {/* Hamburger Button */}
         {isMobile && (
           <div
             onClick={toggleMenu}
             style={{
-              position: 'absolute',
-              right: 0,
-              top: 10,
-              padding: 10,
-              zIndex: 6,
-              WebkitTapHighlightColor: 'transparent',
-              tapHighlightColor: 'transparent',
-              outline: 'none',
+              cursor: 'pointer',
+              zIndex: 100,
             }}
           >
             {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
@@ -133,22 +116,71 @@ const LandingPage = () => {
           style={{
             position: 'fixed',
             top: 0,
-            left: 0,
+            right: 0,
             width: '100%',
             height: '100vh',
             background,
-            zIndex: 10,
-            padding: 40,
+            zIndex: 99,
+            paddingTop: 60,
+            paddingBottom: 30,
+            paddingHorizontal: 20,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
             gap: 30,
           }}
         >
+          {/* Close button at top right */}
+          <div
+            onClick={toggleMenu}
+            style={{
+              position: 'absolute',
+              top: 20,
+              right: 20,
+              cursor: 'pointer',
+            }}
+          >
+            <FiX size={28} color={textColor} />
+          </div>
+
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
+
+          {/* Dark/Light Toggle inside Mobile Menu */}
+          <div
+            onClick={toggleTheme}
+            style={{
+              marginTop: 30,
+              width: 60,
+              height: 30,
+              background: isDarkMode ? 'white' : 'black',
+              borderRadius: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
+              padding: 4,
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                background: isDarkMode ? 'black' : 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src={isDarkMode ? elpseIcon : moonIcon}
+                alt="toggle-icon"
+                style={{ width: 14, height: 14 }}
+              />
+            </div>
+          </div>
         </div>
       )}
 
