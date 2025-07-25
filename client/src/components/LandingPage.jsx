@@ -3,7 +3,7 @@ import circleLogo from '../assets/circle.png';
 import monkeyImage from '../assets/monkey.png';
 import moonIcon from '../assets/moon.svg';
 import elpseIcon from '../assets/elpse.svg';
-import { FiMenu, FiX } from 'react-icons/fi'; // Mobile icons
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -55,14 +55,55 @@ const LandingPage = () => {
 
         {/* Desktop Nav */}
         {!isMobile && (
-          <div style={{ display: 'flex', gap: 50, marginLeft: 'auto' }}>
-            <div style={{ fontSize: 24 }}>Home</div>
-            <div style={{ fontSize: 24 }}>Categories</div>
-            <div style={{ fontSize: 24 }}>About</div>
+          <div style={{ display: 'flex', gap: 50, marginLeft: 'auto', alignItems: 'center' }}>
+            <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
+            <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
+            <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
           </div>
         )}
 
-        {/* Mobile Right Side: Hamburger */}
+        {/* Dark/Light Toggle (always visible) */}
+        <div
+          onClick={toggleTheme}
+          style={{
+            position: isMobile ? 'absolute' : 'absolute',
+            left: isMobile ? '50%' : 'auto',
+            right: isMobile ? 'auto' : 80,
+            transform: isMobile ? 'translateX(-50%)' : 'none',
+            top: 10,
+            width: 60,
+            height: 30,
+            background: isDarkMode ? 'white' : 'black',
+            borderRadius: 20,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
+            padding: 4,
+            cursor: 'pointer',
+            WebkitTapHighlightColor: 'transparent',
+            zIndex: 5,
+          }}
+        >
+          <div
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: '50%',
+              background: isDarkMode ? 'black' : 'white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={isDarkMode ? elpseIcon : moonIcon}
+              alt="toggle-icon"
+              style={{ width: 14, height: 14 }}
+            />
+          </div>
+        </div>
+
+        {/* Hamburger Menu */}
         {isMobile && (
           <div
             onClick={toggleMenu}
@@ -71,75 +112,37 @@ const LandingPage = () => {
               right: 0,
               top: 10,
               padding: 10,
-              zIndex: 3,
+              zIndex: 6,
               WebkitTapHighlightColor: 'transparent',
             }}
           >
             {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
           </div>
         )}
-
-        {/* Mobile Center: Theme Toggle */}
-        {isMobile && (
-          <div
-            onClick={toggleTheme}
-            style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              top: 10,
-              width: 60,
-              height: 30,
-              background: isDarkMode ? 'white' : 'black',
-              borderRadius: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
-              padding: 4,
-              cursor: 'pointer',
-              WebkitTapHighlightColor: 'transparent',
-            }}
-          >
-            <div
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: '50%',
-                background: isDarkMode ? 'black' : 'white',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <img
-                src={isDarkMode ? elpseIcon : moonIcon}
-                alt="toggle-icon"
-                style={{ width: 14, height: 14 }}
-              />
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Mobile Slide Menu */}
+      {/* Mobile Fullscreen Overlay Menu */}
       {isMobile && isMenuOpen && (
         <div
           style={{
-            position: 'absolute',
-            top: 60,
+            position: 'fixed',
+            top: 0,
             left: 0,
             width: '100%',
+            height: '100vh',
             background,
-            zIndex: 2,
-            padding: '20px',
-            boxShadow: isDarkMode
-              ? '0 4px 12px rgba(255, 255, 255, 0.1)'
-              : '0 4px 12px rgba(0, 0, 0, 0.1)',
+            zIndex: 4,
+            padding: 40,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 30,
           }}
         >
-          <div style={{ fontSize: 20, marginBottom: 15 }}>Home</div>
-          <div style={{ fontSize: 20, marginBottom: 15 }}>Categories</div>
-          <div style={{ fontSize: 20 }}>About</div>
+          <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
+          <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
+          <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
         </div>
       )}
 
