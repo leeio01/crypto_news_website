@@ -31,12 +31,14 @@ const LandingPage = () => {
     <div
       style={{
         width: '100%',
+        maxWidth: '100vw',
         minHeight: '100vh',
         background,
         color: textColor,
         position: 'relative',
         padding: isMobile ? 20 : 0,
         overflowX: 'hidden',
+        boxSizing: 'border-box',
       }}
     >
       {/* Header */}
@@ -62,11 +64,11 @@ const LandingPage = () => {
           </div>
         )}
 
-        {/* Dark/Light Toggle (always visible) */}
+        {/* Dark/Light Toggle */}
         <div
           onClick={toggleTheme}
           style={{
-            position: isMobile ? 'absolute' : 'absolute',
+            position: 'absolute',
             left: isMobile ? '50%' : 'auto',
             right: isMobile ? 'auto' : 80,
             transform: isMobile ? 'translateX(-50%)' : 'none',
@@ -81,6 +83,8 @@ const LandingPage = () => {
             padding: 4,
             cursor: 'pointer',
             WebkitTapHighlightColor: 'transparent',
+            tapHighlightColor: 'transparent',
+            outline: 'none',
             zIndex: 5,
           }}
         >
@@ -114,6 +118,8 @@ const LandingPage = () => {
               padding: 10,
               zIndex: 6,
               WebkitTapHighlightColor: 'transparent',
+              tapHighlightColor: 'transparent',
+              outline: 'none',
             }}
           >
             {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
@@ -131,7 +137,7 @@ const LandingPage = () => {
             width: '100%',
             height: '100vh',
             background,
-            zIndex: 4,
+            zIndex: 10,
             padding: 40,
             display: 'flex',
             flexDirection: 'column',
@@ -155,6 +161,8 @@ const LandingPage = () => {
           justifyContent: 'center',
           padding: isMobile ? '60px 0' : '60px',
           gap: 50,
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <img
