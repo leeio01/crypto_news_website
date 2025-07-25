@@ -3,12 +3,15 @@ import circleLogo from '../assets/circle.png';
 import monkeyImage from '../assets/monkey.png';
 import moonIcon from '../assets/moon.svg';
 import elpseIcon from '../assets/elpse.svg';
+import { FiMenu, FiX } from 'react-icons/fi'; // Mobile menu icons
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleTheme = () => setIsDarkMode(prev => !prev);
+  const toggleMenu = () => setIsMenuOpen(prev => !prev);
 
   const background = isDarkMode ? 'black' : 'white';
   const textColor = isDarkMode ? 'white' : 'black';
@@ -33,23 +36,32 @@ const LandingPage = () => {
         color: textColor,
         padding: isMobile ? 20 : 0,
         overflowX: 'hidden',
+        fontFamily: 'Poppins',
       }}
     >
       {/* Header */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: isMobile ? 'space-between' : 'flex-start',
-        padding: isMobile ? '10px 0' : '30px 70px',
-        gap: '20px',
+        justifyContent: 'space-between',
+        padding: isMobile ? '10px 20px' : '30px 70px',
       }}>
+        {/* Logo */}
         <img src={circleLogo} alt="Logo" style={{ width: isMobile ? 40 : 60 }} />
 
+        {/* Desktop Nav */}
         {!isMobile && (
-          <div style={{ display: 'flex', gap: 50, marginLeft: 'auto' }}>
+          <div style={{ display: 'flex', gap: 50 }}>
             <div style={{ fontSize: 24 }}>Home</div>
             <div style={{ fontSize: 24 }}>Categories</div>
             <div style={{ fontSize: 24 }}>About</div>
+          </div>
+        )}
+
+        {/* Mobile Nav Toggle */}
+        {isMobile && (
+          <div onClick={toggleMenu} style={{ cursor: 'pointer' }}>
+            {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
           </div>
         )}
 
@@ -89,6 +101,27 @@ const LandingPage = () => {
         </div>
       </div>
 
+      {/* Mobile Slide-down Menu */}
+      {isMobile && (
+        <div
+          style={{
+            maxHeight: isMenuOpen ? 200 : 0,
+            overflow: 'hidden',
+            transition: 'max-height 0.3s ease-in-out',
+            background: background,
+            padding: isMenuOpen ? '10px 20px' : '0 20px',
+          }}
+        >
+          {isMenuOpen && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ fontSize: 20 }}>Home</div>
+              <div style={{ fontSize: 20 }}>Categories</div>
+              <div style={{ fontSize: 20 }}>About</div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Main Content */}
       <div style={{
         display: 'flex',
@@ -107,9 +140,7 @@ const LandingPage = () => {
             objectFit: 'contain',
           }}
         />
-
         <div style={{
-          fontFamily: 'Poppins',
           fontSize: isMobile ? 32 : 60,
           fontWeight: 400,
           textAlign: isMobile ? 'center' : 'left',
