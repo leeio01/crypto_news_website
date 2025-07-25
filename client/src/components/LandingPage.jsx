@@ -3,7 +3,7 @@ import circleLogo from '../assets/circle.png';
 import monkeyImage from '../assets/monkey.png';
 import moonIcon from '../assets/moon.svg';
 import elpseIcon from '../assets/elpse.svg';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX } from 'react-icons/fi'; // Mobile icons
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -34,6 +34,7 @@ const LandingPage = () => {
         minHeight: '100vh',
         background,
         color: textColor,
+        position: 'relative',
         padding: isMobile ? 20 : 0,
         overflowX: 'hidden',
       }}
@@ -43,19 +44,50 @@ const LandingPage = () => {
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: isMobile ? 'space-between' : 'space-between',
-          padding: isMobile ? '10px 20px' : '30px 70px',
+          justifyContent: isMobile ? 'space-between' : 'flex-start',
+          padding: isMobile ? '10px 0' : '30px 70px',
+          gap: '20px',
+          position: 'relative',
         }}
       >
-        {/* Logo - Left Side */}
+        {/* Left Logo */}
         <img src={circleLogo} alt="Logo" style={{ width: isMobile ? 40 : 60 }} />
 
-        {/* Theme Toggle - Center */}
+        {/* Desktop Nav */}
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: 50, marginLeft: 'auto' }}>
+            <div style={{ fontSize: 24 }}>Home</div>
+            <div style={{ fontSize: 24 }}>Categories</div>
+            <div style={{ fontSize: 24 }}>About</div>
+          </div>
+        )}
+
+        {/* Mobile Right Side: Hamburger */}
+        {isMobile && (
+          <div
+            onClick={toggleMenu}
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 10,
+              padding: 10,
+              zIndex: 3,
+              WebkitTapHighlightColor: 'transparent',
+            }}
+          >
+            {isMenuOpen ? <FiX size={28} color={textColor} /> : <FiMenu size={28} color={textColor} />}
+          </div>
+        )}
+
+        {/* Mobile Center: Theme Toggle */}
         {isMobile && (
           <div
             onClick={toggleTheme}
             style={{
-              cursor: 'pointer',
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              top: 10,
               width: 60,
               height: 30,
               background: isDarkMode ? 'white' : 'black',
@@ -64,6 +96,8 @@ const LandingPage = () => {
               alignItems: 'center',
               justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
               padding: 4,
+              cursor: 'pointer',
+              WebkitTapHighlightColor: 'transparent',
             }}
           >
             <div
@@ -85,84 +119,38 @@ const LandingPage = () => {
             </div>
           </div>
         )}
-
-        {/* Mobile Menu Toggle - Right Side */}
-        {isMobile && (
-          <div onClick={toggleMenu} style={{ cursor: 'pointer' }}>
-            {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-          </div>
-        )}
-
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <div style={{ display: 'flex', gap: 50 }}>
-            <div style={{ fontSize: 24 }}>Home</div>
-            <div style={{ fontSize: 24 }}>Categories</div>
-            <div style={{ fontSize: 24 }}>About</div>
-
-            {/* Desktop Theme Toggle */}
-            <div
-              onClick={toggleTheme}
-              style={{
-                cursor: 'pointer',
-                width: 60,
-                height: 30,
-                background: isDarkMode ? 'white' : 'black',
-                borderRadius: 20,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
-                padding: 4,
-              }}
-            >
-              <div
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: '50%',
-                  background: isDarkMode ? 'black' : 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src={isDarkMode ? elpseIcon : moonIcon}
-                  alt="toggle-icon"
-                  style={{ width: 14, height: 14 }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Slide Menu */}
       {isMobile && isMenuOpen && (
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            padding: '10px 20px',
-            gap: 15,
+            position: 'absolute',
+            top: 60,
+            left: 0,
+            width: '100%',
             background,
+            zIndex: 2,
+            padding: '20px',
+            boxShadow: isDarkMode
+              ? '0 4px 12px rgba(255, 255, 255, 0.1)'
+              : '0 4px 12px rgba(0, 0, 0, 0.1)',
           }}
         >
-          <div style={{ fontSize: 20 }}>Home</div>
-          <div style={{ fontSize: 20 }}>Categories</div>
+          <div style={{ fontSize: 20, marginBottom: 15 }}>Home</div>
+          <div style={{ fontSize: 20, marginBottom: 15 }}>Categories</div>
           <div style={{ fontSize: 20 }}>About</div>
         </div>
       )}
 
-      {/* Main Content */}
+      {/* Main Section */}
       <div
         style={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: isMobile ? '30px 0' : '60px',
+          padding: isMobile ? '60px 0' : '60px',
           gap: 50,
         }}
       >
@@ -175,7 +163,6 @@ const LandingPage = () => {
             objectFit: 'contain',
           }}
         />
-
         <div
           style={{
             fontFamily: 'Poppins',
