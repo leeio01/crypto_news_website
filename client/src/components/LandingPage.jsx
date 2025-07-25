@@ -13,6 +13,12 @@ const LandingPage = () => {
   const background = isDarkMode ? 'black' : 'white';
   const textColor = isDarkMode ? 'white' : 'black';
 
+  // ✅ Apply dynamic background to <body> and <html>
+  useEffect(() => {
+    document.body.style.backgroundColor = background;
+    document.documentElement.style.backgroundColor = background;
+  }, [background]);
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
