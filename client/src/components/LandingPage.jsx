@@ -13,7 +13,6 @@ const LandingPage = () => {
   const background = isDarkMode ? 'black' : 'white';
   const textColor = isDarkMode ? 'white' : 'black';
 
-  // ✅ Apply dynamic background to <body> and <html>
   useEffect(() => {
     document.body.style.backgroundColor = background;
     document.documentElement.style.backgroundColor = background;
@@ -29,121 +28,93 @@ const LandingPage = () => {
     <div
       style={{
         width: '100%',
-        height: '100vh',
-        position: 'relative',
+        minHeight: '100vh',
         background,
-        overflow: 'hidden',
+        color: textColor,
         padding: isMobile ? 20 : 0,
+        overflowX: 'hidden',
       }}
     >
-      {/* NAVIGATION */}
-      {!isMobile && (
-        <>
-          <div style={{
-            width: 146, height: 59, left: 545, top: 51, position: 'absolute',
-            color: textColor, fontSize: 45, fontFamily: 'Outfit', fontWeight: 400
-          }}>Home</div>
-
-          <div style={{
-            width: 146, height: 59, left: 993, top: 51, position: 'absolute',
-            color: textColor, fontSize: 45, fontFamily: 'Outfit', fontWeight: 400
-          }}>About</div>
-
-          <div style={{
-            width: 272, height: 59, left: 721, top: 51, position: 'absolute',
-            color: textColor, fontSize: 45, fontFamily: 'Outfit', fontWeight: 400
-          }}>Categories</div>
-        </>
-      )}
-
-      {/* LOGO TEXT */}
+      {/* Header */}
       <div style={{
-        width: 146,
-        height: 59,
-        left: isMobile ? 20 : 91,
-        top: isMobile ? 20 : 106,
-        position: 'absolute',
-        color: textColor,
-        fontSize: isMobile ? 16 : 20,
-        fontFamily: 'Outfit',
-        fontWeight: 400
-      }}>Circle</div>
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: isMobile ? 'space-between' : 'flex-start',
+        padding: isMobile ? '10px 0' : '30px 70px',
+        gap: '20px',
+      }}>
+        <img src={circleLogo} alt="Logo" style={{ width: isMobile ? 40 : 60 }} />
 
-      {/* CHARACTER IMAGE */}
-      <img
-        src={monkeyImage}
-        alt="Monkey"
-        style={{
-          width: isMobile ? 250 : 627,
-          height: isMobile ? 250 : 627,
-          left: isMobile ? '50%' : 0,
-          transform: isMobile ? 'translateX(-50%)' : 'none',
-          top: isMobile ? 180 : 254,
-          position: 'absolute'
-        }}
-      />
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: 50, marginLeft: 'auto' }}>
+            <div style={{ fontSize: 24 }}>Home</div>
+            <div style={{ fontSize: 24 }}>Categories</div>
+            <div style={{ fontSize: 24 }}>About</div>
+          </div>
+        )}
 
-      {/* CIRCLE LOGO */}
-      <img
-        src={circleLogo}
-        alt="Circle Logo"
-        style={{
-          width: isMobile ? 60 : 105,
-          height: isMobile ? 60 : 105,
-          left: isMobile ? 20 : 70,
-          top: isMobile ? 20 : 30,
-          position: 'absolute'
-        }}
-      />
-
-      {/* COMING SOON */}
-      <div style={{
-        width: isMobile ? '100%' : 512,
-        textAlign: isMobile ? 'center' : 'left',
-        height: 116,
-        left: isMobile ? 0 : 696,
-        top: isMobile ? 450 : 456,
-        position: 'absolute',
-        color: textColor,
-        fontSize: isMobile ? 28 : 60,
-        fontFamily: 'Poppins',
-        fontWeight: 400
-      }}>COMING SOON</div>
-
-      {/* THEME TOGGLE */}
-      <div
-        onClick={toggleTheme}
-        style={{
-          cursor: 'pointer',
-          width: 100,
-          height: 40,
-          left: isMobile ? '80%' : 1170,
-          top: isMobile ? 25 : 56,
-          position: 'absolute',
-          background: isDarkMode ? 'white' : 'black',
-          borderRadius: 20,
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 5px',
-          justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
-        }}
-      >
+        {/* Theme Toggle */}
         <div
+          onClick={toggleTheme}
           style={{
-            width: 30,
+            cursor: 'pointer',
+            width: 60,
             height: 30,
-            borderRadius: '50%',
-            background: isDarkMode ? 'black' : 'white',
+            background: isDarkMode ? 'white' : 'black',
+            borderRadius: 20,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: isDarkMode ? 'flex-end' : 'flex-start',
+            padding: 4,
+            marginLeft: isMobile ? 10 : 40,
           }}
         >
-          <img
-            src={isDarkMode ? elpseIcon : moonIcon}
-            alt="toggle-icon"
-            style={{ width: 18, height: 18 }}
-          />
+          <div
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: '50%',
+              background: isDarkMode ? 'black' : 'white',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <img
+              src={isDarkMode ? elpseIcon : moonIcon}
+              alt="toggle-icon"
+              style={{ width: 14, height: 14 }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: isMobile ? '30px 0' : '60px',
+        gap: 50
+      }}>
+        <img
+          src={monkeyImage}
+          alt="Monkey"
+          style={{
+            width: isMobile ? 220 : 500,
+            height: isMobile ? 220 : 500,
+            objectFit: 'contain',
+          }}
+        />
+
+        <div style={{
+          fontFamily: 'Poppins',
+          fontSize: isMobile ? 32 : 60,
+          fontWeight: 400,
+          textAlign: isMobile ? 'center' : 'left',
+        }}>
+          COMING SOON
         </div>
       </div>
     </div>
