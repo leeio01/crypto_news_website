@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import circleLogo from '../assets/circle.png';
 import monkeyImage from '../assets/monkey.png';
 import moonIcon from '../assets/moon.svg';
@@ -9,6 +10,7 @@ const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTheme = () => setIsDarkMode(prev => !prev);
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
@@ -49,13 +51,20 @@ const LandingPage = () => {
           position: 'relative',
         }}
       >
-        {/* Left Logo */}
-        <img src={circleLogo} alt="Logo" style={{ width: isMobile ? 40 : 60 }} />
+        {/* Clickable Logo */}
+        <img
+          src={circleLogo}
+          alt="Logo"
+          style={{ width: isMobile ? 40 : 60, cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        />
 
         {/* Desktop Nav */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: 50, marginLeft: 'auto', alignItems: 'center' }}>
-            <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
+            <div style={{ fontSize: 24, cursor: 'pointer' }} onClick={() => navigate('/')}>
+              Home
+            </div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
@@ -96,7 +105,7 @@ const LandingPage = () => {
           </div>
         )}
 
-        {/* Hamburger Button (only when menu is closed) */}
+        {/* Hamburger Button */}
         {isMobile && !isMenuOpen && (
           <div
             onClick={toggleMenu}
@@ -110,7 +119,7 @@ const LandingPage = () => {
         )}
       </div>
 
-      {/* Mobile Fullscreen Overlay Menu */}
+      {/* Mobile Overlay Menu */}
       {isMobile && isMenuOpen && (
         <div
           style={{
@@ -123,14 +132,13 @@ const LandingPage = () => {
             zIndex: 99,
             paddingTop: 60,
             paddingBottom: 30,
-            paddingHorizontal: 20,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: 30,
           }}
         >
-          {/* Close Button inside Menu */}
+          {/* Close Button */}
           <div
             onClick={toggleMenu}
             style={{
@@ -143,11 +151,13 @@ const LandingPage = () => {
             <FiX size={28} color={textColor} />
           </div>
 
-          <div style={{ fontSize: 24, cursor: 'pointer' }}>Home</div>
+          <div style={{ fontSize: 24, cursor: 'pointer' }} onClick={() => { navigate('/'); toggleMenu(); }}>
+            Home
+          </div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-          {/* Dark/Light Toggle inside Menu */}
+          {/* Theme Toggle */}
           <div
             onClick={toggleTheme}
             style={{
