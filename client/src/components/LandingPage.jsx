@@ -1,5 +1,5 @@
+// src/components/LandingPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import circleLogo from '../assets/circle.png';
 import monkeyImage from '../assets/monkey.png';
 import moonIcon from '../assets/moon.svg';
@@ -10,7 +10,6 @@ const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const toggleTheme = () => setIsDarkMode(prev => !prev);
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
@@ -51,24 +50,27 @@ const LandingPage = () => {
           position: 'relative',
         }}
       >
-        {/* Clickable Logo */}
+        {/* Logo (reloads page on click) */}
         <img
           src={circleLogo}
           alt="Logo"
+          onClick={() => (window.location.href = '/')}
           style={{ width: isMobile ? 40 : 60, cursor: 'pointer' }}
-          onClick={() => navigate('/')}
         />
 
         {/* Desktop Nav */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: 50, marginLeft: 'auto', alignItems: 'center' }}>
-            <div style={{ fontSize: 24, cursor: 'pointer' }} onClick={() => navigate('/')}>
+            <div
+              onClick={() => (window.location.href = '/')}
+              style={{ fontSize: 24, cursor: 'pointer', color: textColor }}
+            >
               Home
             </div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-            {/* Dark/Light Toggle Desktop */}
+            {/* Dark/Light Toggle */}
             <div
               onClick={toggleTheme}
               style={{
@@ -105,21 +107,15 @@ const LandingPage = () => {
           </div>
         )}
 
-        {/* Hamburger Button */}
+        {/* Hamburger Icon (mobile) */}
         {isMobile && !isMenuOpen && (
-          <div
-            onClick={toggleMenu}
-            style={{
-              cursor: 'pointer',
-              zIndex: 100,
-            }}
-          >
+          <div onClick={toggleMenu} style={{ cursor: 'pointer', zIndex: 100 }}>
             <FiMenu size={28} color={textColor} />
           </div>
         )}
       </div>
 
-      {/* Mobile Overlay Menu */}
+      {/* Mobile Menu */}
       {isMobile && isMenuOpen && (
         <div
           style={{
@@ -131,33 +127,29 @@ const LandingPage = () => {
             background,
             zIndex: 99,
             paddingTop: 60,
-            paddingBottom: 30,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: 30,
           }}
         >
-          {/* Close Button */}
-          <div
-            onClick={toggleMenu}
-            style={{
-              position: 'absolute',
-              top: 20,
-              right: 20,
-              cursor: 'pointer',
-            }}
-          >
+          <div onClick={toggleMenu} style={{ position: 'absolute', top: 20, right: 20, cursor: 'pointer' }}>
             <FiX size={28} color={textColor} />
           </div>
 
-          <div style={{ fontSize: 24, cursor: 'pointer' }} onClick={() => { navigate('/'); toggleMenu(); }}>
+          <div
+            onClick={() => {
+              toggleMenu();
+              window.location.href = '/';
+            }}
+            style={{ fontSize: 24, color: textColor, textDecoration: 'none', cursor: 'pointer' }}
+          >
             Home
           </div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-          {/* Theme Toggle */}
+          {/* Dark/Light Toggle in Mobile Menu */}
           <div
             onClick={toggleTheme}
             style={{

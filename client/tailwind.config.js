@@ -1,17 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  darkMode: 'class', // Enable dark mode via class
-  theme: {
-    extend: {
-      fontFamily: {
-        Outfit: ['Outfit', 'sans-serif'],
-        Poppins: ['Poppins', 'sans-serif'],
-      },
-    },
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    historyApiFallback: true, // for SPA routing fallback
   },
-  plugins: [],
-};
+});
