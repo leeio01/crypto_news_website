@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import circleLogo from '../assets/circle.png';
-import monkey from '../assets/monkey.png';
-import monkey2 from '../assets/monkey2.png';
-import monkey3 from '../assets/monkey3.png';
-import monkey4 from '../assets/monkey4.png';
-import monkey5 from '../assets/monkey5.png';
-import monkey6 from '../assets/monkey6.png';
+import nft1 from '../assets/nft1.png';
+import nft2 from '../assets/nft2.png';
+import nft3 from '../assets/nft3.png';
+import nft4 from '../assets/nft4.png';
+import nft5 from '../assets/nft5.png';
+import nft6 from '../assets/nft6.png';
 import moonIcon from '../assets/moon.svg';
 import elpseIcon from '../assets/elpse.svg';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-const monkeyImages = [monkey, monkey2, monkey3, monkey4, monkey5, monkey6];
+const monkeyImages = [nft1, nft2, nft3, nft4, nft5, nft6];
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
