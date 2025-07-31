@@ -1,15 +1,23 @@
-// src/components/LandingPage.jsx
 import React, { useState, useEffect } from 'react';
 import circleLogo from '../assets/circle.png';
-import monkeyImage from '../assets/monkey.png';
+import monkey from '../assets/monkey.png';
+import monkey2 from '../assets/monkey2.png';
+import monkey3 from '../assets/monkey3.png';
+import monkey4 from '../assets/monkey4.png';
+import monkey5 from '../assets/monkey5.png';
+import monkey6 from '../assets/monkey6.png';
 import moonIcon from '../assets/moon.svg';
 import elpseIcon from '../assets/elpse.svg';
 import { FiMenu, FiX } from 'react-icons/fi';
+
+const monkeyImages = [monkey, monkey2, monkey3, monkey4, monkey5, monkey6];
 
 const LandingPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [monkeyIndex, setMonkeyIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
   const toggleTheme = () => setIsDarkMode(prev => !prev);
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
@@ -26,6 +34,17 @@ const LandingPage = () => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setMonkeyIndex(prev => (prev + 1) % monkeyImages.length);
+        setFade(true);
+      }, 400); // match transition duration
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -47,10 +66,8 @@ const LandingPage = () => {
           alignItems: 'center',
           justifyContent: isMobile ? 'space-between' : 'flex-start',
           padding: isMobile ? '10px 20px' : '30px 70px',
-          position: 'relative',
         }}
       >
-        {/* Logo (reloads page on click) */}
         <img
           src={circleLogo}
           alt="Logo"
@@ -58,19 +75,14 @@ const LandingPage = () => {
           style={{ width: isMobile ? 40 : 60, cursor: 'pointer' }}
         />
 
-        {/* Desktop Nav */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: 50, marginLeft: 'auto', alignItems: 'center' }}>
-            <div
-              onClick={() => (window.location.href = '/')}
-              style={{ fontSize: 24, cursor: 'pointer', color: textColor }}
-            >
+            <div onClick={() => (window.location.href = '/')} style={{ fontSize: 24, cursor: 'pointer' }}>
               Home
             </div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
             <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-            {/* Dark/Light Toggle */}
             <div
               onClick={toggleTheme}
               style={{
@@ -107,7 +119,6 @@ const LandingPage = () => {
           </div>
         )}
 
-        {/* Hamburger Icon (mobile) */}
         {isMobile && !isMenuOpen && (
           <div onClick={toggleMenu} style={{ cursor: 'pointer', zIndex: 100 }}>
             <FiMenu size={28} color={textColor} />
@@ -142,14 +153,13 @@ const LandingPage = () => {
               toggleMenu();
               window.location.href = '/';
             }}
-            style={{ fontSize: 24, color: textColor, textDecoration: 'none', cursor: 'pointer' }}
+            style={{ fontSize: 24, color: textColor, cursor: 'pointer' }}
           >
             Home
           </div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>Categories</div>
           <div style={{ fontSize: 24, cursor: 'pointer' }}>About</div>
 
-          {/* Dark/Light Toggle in Mobile Menu */}
           <div
             onClick={toggleTheme}
             style={{
@@ -196,18 +206,20 @@ const LandingPage = () => {
           padding: isMobile ? '60px 0' : '60px',
           gap: 50,
           position: 'relative',
-          zIndex: 1,
         }}
       >
         <img
-          src={monkeyImage}
-          alt="Monkey"
+          src={monkeyImages[monkeyIndex]}
+          alt={`Monkey ${monkeyIndex + 1}`}
           style={{
             width: isMobile ? 220 : 500,
             height: isMobile ? 220 : 500,
             objectFit: 'contain',
+            opacity: fade ? 1 : 0,
+            transition: 'opacity 0.4s ease-in-out',
           }}
         />
+
         <div
           style={{
             fontFamily: 'Poppins',
@@ -218,6 +230,29 @@ const LandingPage = () => {
         >
           COMING SOON
         </div>
+      </div>
+
+      {/* Slider Dots */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 10,
+          marginBottom: 40,
+        }}
+      >
+        {monkeyImages.map((_, idx) => (
+          <div
+            key={idx}
+            style={{
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              background: monkeyIndex === idx ? textColor : '#999',
+              transition: 'background 0.3s ease',
+            }}
+          />
+        ))}
       </div>
     </div>
   );
