@@ -5,10 +5,12 @@ export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
 
   const updateThemeColor = (isDark) => {
-    const metaTag = document.getElementById('theme-color');
-    if (metaTag) {
-      metaTag.setAttribute('content', isDark ? '#111827' : '#ffffff');
-    }
+    setTimeout(() => {
+      const metaTag = document.getElementById('theme-color');
+      if (metaTag) {
+        metaTag.setAttribute('content', isDark ? '#111827' : '#ffffff');
+      }
+    }, 100); // ✅ this delay helps Android/Chrome browsers update the bar color
   };
 
   const toggleDarkMode = () => {
