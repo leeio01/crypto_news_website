@@ -2,21 +2,29 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    // initial mode based on system or localStorage
+    return (
+      localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    );
+  });
 
   const updateThemeColor = (isDark) => {
-    setTimeout(() => {
-      const metaTag = document.getElementById('theme-color');
-      if (metaTag) {
+    const metaTag = document.querySelector('meta#dynamic-theme');
+    if (metaTag) {
+      setTimeout(() => {
         metaTag.setAttribute('content', isDark ? '#111827' : '#ffffff');
-      }
-    }, 100); // ✅ this delay helps Android/Chrome browsers update the bar color
+      }, 100);
+    }
   };
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     document.documentElement.classList.toggle('dark', newDarkMode);
+    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
     updateThemeColor(newDarkMode);
   };
 
